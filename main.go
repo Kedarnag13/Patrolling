@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "github.com/Kedarnag13/Patrolling/routers"
-
 	"github.com/astaxie/beego"
 )
 

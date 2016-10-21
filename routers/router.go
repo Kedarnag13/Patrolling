@@ -9,7 +9,6 @@ package routers
 
 import (
 	"github.com/Kedarnag13/Patrolling/controllers"
-
 	"github.com/astaxie/beego"
 )
 

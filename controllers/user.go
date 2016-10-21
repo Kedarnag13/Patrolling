@@ -1,9 +1,8 @@
 package controllers
 
 import (
-	"github.com/Kedarnag13/Patrolling/models"
 	"encoding/json"
-
+	"github.com/Kedarnag13/Patrolling/models"
 	"github.com/astaxie/beego"
 )
 
@@ -116,4 +115,3 @@ func (u *UserController) Logout() {
 	u.Data["json"] = "logout success"
 	u.ServeJSON()
 }
-
