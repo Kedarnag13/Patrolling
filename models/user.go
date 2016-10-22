@@ -7,7 +7,8 @@ import (
 	"github.com/astaxie/beego/orm"
 )
 
-type User struct {
+type Users struct {
+	Id        int
 	Firstname string
 	Lastname  string
 	Email     string
@@ -23,12 +24,6 @@ type User struct {
 // 	UserList["user_11111"] = &u
 // }
 
-func init() {
-	orm.RegisterDriver("postgres", orm.DRPostgres)
-	orm.RegisterDataBase("default", "postgres", "postgres:postgres@/patrolling_development?charset=utf8")
-	orm.RegisterModel(new(User))
-}
-
 // type User struct {
 // 	Id       string
 // 	Username string
@@ -43,13 +38,14 @@ func init() {
 // 	Email   string
 // }
 
-func Save(u User) {
+func Save(u Users) *Users {
 	o := orm.NewOrm()
-	new_user := new(User)
+	new_user := &Users{}
 	new_user.Firstname = u.Firstname
 	new_user.Lastname = u.Lastname
 	new_user.Email = u.Email
 	o.Insert(new_user)
+	return new_user
 }
 
 // func AddUser(u User) string {

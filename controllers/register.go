@@ -12,9 +12,9 @@ type RegisterController struct {
 }
 
 func (r *RegisterController) Post() {
-	var user models.User
+	var user models.Users
 	json.Unmarshal(r.Ctx.Input.RequestBody, &user)
-	models.Save(user)
-	// r.Data["json"] = map[string]string{"saved_user": saved_user}
-	// r.ServeJSON()
+	created_user := models.Save(user)
+	r.Data["json"] = created_user
+	r.ServeJSON()
 }
