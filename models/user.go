@@ -4,14 +4,17 @@ import (
 	// "errors"
 	// "strconv"
 	// "time"
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
 type Users struct {
-	Id        int
-	Firstname string
-	Lastname  string
-	Email     string
+	Id           int
+	FirstName    string `valid:"Required;Alpha"`
+	LastName     string `valid:"Required;Alpha"`
+	Email        string `valid:"Required;Email"`
+	MobileNumber string `valid:"Required;Mobile"`
+	Designation  string `valid:"Alpha"`
 }
 
 // var (
@@ -40,10 +43,14 @@ type Users struct {
 
 func Save(u Users) *Users {
 	o := orm.NewOrm()
+	// qs := o.QueryTable("users")
+	fmt.Println("MobileNumber=%v", u.MobileNumber)
 	new_user := &Users{}
-	new_user.Firstname = u.Firstname
-	new_user.Lastname = u.Lastname
+	new_user.FirstName = u.FirstName
+	new_user.LastName = u.LastName
 	new_user.Email = u.Email
+	new_user.MobileNumber = u.MobileNumber
+	new_user.Designation = u.Designation
 	o.Insert(new_user)
 	return new_user
 }
