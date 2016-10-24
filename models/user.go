@@ -4,7 +4,6 @@ import (
 	// "errors"
 	// "strconv"
 	// "time"
-	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -12,8 +11,8 @@ type Users struct {
 	Id           int
 	FirstName    string `valid:"Required;Alpha"`
 	LastName     string `valid:"Required;Alpha"`
-	Email        string `valid:"Required;Email"`
-	MobileNumber string `valid:"Required;Mobile"`
+	Email        string `valid:"Required;Email";orm:"unique"`
+	MobileNumber string `valid:"Required;Numeric"`
 	Designation  string `valid:"Alpha"`
 }
 
@@ -41,10 +40,8 @@ type Users struct {
 // 	Email   string
 // }
 
-func Save(u Users) *Users {
+func CreateUser(u Users) *Users {
 	o := orm.NewOrm()
-	// qs := o.QueryTable("users")
-	fmt.Println("MobileNumber=%v", u.MobileNumber)
 	new_user := &Users{}
 	new_user.FirstName = u.FirstName
 	new_user.LastName = u.LastName

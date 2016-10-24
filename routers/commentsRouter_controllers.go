@@ -15,30 +15,30 @@ func init() {
 
 	// beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"],
 	// 	beego.ControllerComments{
-	// 		Method:           "Get",
-	// 		Router:           `/:objectId`,
+	// 		Method: "Get",
+	// 		Router: `/:objectId`,
 	// 		AllowHTTPMethods: []string{"get"},
-	// 		Params:           nil})
+	// 		Params: nil})
 
 	// beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"],
 	// 	beego.ControllerComments{
-	// 		Method:           "GetAll",
-	// 		Router:           `/`,
+	// 		Method: "GetAll",
+	// 		Router: `/`,
 	// 		AllowHTTPMethods: []string{"get"},
-	// 		Params:           nil})
+	// 		Params: nil})
 
 	// beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"],
 	// 	beego.ControllerComments{
-	// 		Method:           "Put",
-	// 		Router:           `/:objectId`,
+	// 		Method: "Put",
+	// 		Router: `/:objectId`,
 	// 		AllowHTTPMethods: []string{"put"},
-	// 		Params:           nil})
+	// 		Params: nil})
 
 	// beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"],
 	// 	beego.ControllerComments{
-	// 		Method:           "Delete",
-	// 		Router:           `/:objectId`,
+	// 		Method: "Delete",
+	// 		Router: `/:objectId`,
 	// 		AllowHTTPMethods: []string{"delete"},
-	// 		Params:           nil})
+	// 		Params: nil})
 
 }
