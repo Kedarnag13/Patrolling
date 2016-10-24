@@ -1,19 +1,16 @@
 package models
 
 import (
-	// "errors"
-	// "strconv"
-	// "time"
 	"github.com/astaxie/beego/orm"
 )
 
 type Users struct {
 	Id           int
-	FirstName    string `valid:"Required;Alpha"`
-	LastName     string `valid:"Required;Alpha"`
-	Email        string `valid:"Required;Email";orm:"unique"`
-	MobileNumber string `valid:"Required;Numeric"`
-	Designation  string `valid:"Alpha"`
+	FirstName    string `json:"firstname" valid:"Required;Alpha"`
+	LastName     string `json:"lastname" valid:"Required;Alpha"`
+	Email        string `json:"email" valid:"Required;Email" orm:"unique"`
+	MobileNumber string `json:"mobile_number" valid:"Required" orm:"unique"`
+	Designation  string `json:"designation" valid:"Alpha"`
 }
 
 // var (
@@ -48,7 +45,10 @@ func CreateUser(u Users) *Users {
 	new_user.Email = u.Email
 	new_user.MobileNumber = u.MobileNumber
 	new_user.Designation = u.Designation
-	o.Insert(new_user)
+	exist := o.QueryTable("users").Filter("MobileNumber", u.MobileNumber).Exist()
+	if exist == false {
+		o.Insert(new_user)
+	}
 	return new_user
 }
 
