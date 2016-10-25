@@ -11,6 +11,12 @@ type Users struct {
 	Email        string `json:"email" valid:"Required;Email" orm:"unique"`
 	MobileNumber string `json:"mobile_number" valid:"Required" orm:"unique"`
 	Designation  string `json:"designation" valid:"Alpha"`
+	Devise_Token string `json:"devise_token" valid:"Required"`
+}
+
+type Sessions struct {
+	Id     int
+	UserId int
 }
 
 // var (
@@ -45,9 +51,10 @@ func CreateUser(u Users) *Users {
 	new_user.Email = u.Email
 	new_user.MobileNumber = u.MobileNumber
 	new_user.Designation = u.Designation
-	exist := o.QueryTable("users").Filter("MobileNumber", u.MobileNumber).Exist()
-	if exist == false {
+	if o.QueryTable("users").Filter("MobileNumber", u.MobileNumber).Exist() == false {
 		o.Insert(new_user)
+	} else {
+		fmt.Println("User already exists with the Mobile number!")
 	}
 	return new_user
 }
