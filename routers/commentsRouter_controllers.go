@@ -13,6 +13,13 @@ func init() {
 			AllowHTTPMethods: []string{"post"},
 			Params:           nil})
 
+	beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:SignInController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:SignInController"],
+		beego.ControllerComments{
+			Method:           "Post",
+			Router:           `/`,
+			AllowHTTPMethods: []string{"post"},
+			Params:           nil})
+
 	// beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"] = append(beego.GlobalControllerRouter["github.com/Kedarnag13/Patrolling/controllers:ObjectController"],
 	// 	beego.ControllerComments{
 	// 		Method: "Get",

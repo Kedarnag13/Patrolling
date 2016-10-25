@@ -19,6 +19,10 @@ func init() {
 				&controllers.RegisterController{},
 			),
 		),
+		beego.Namespace("/sign_in",
+			beego.NSInclude(
+				&controllers.SignInController{}),
+		),
 	)
 	beego.AddNamespace(ns)
 }
