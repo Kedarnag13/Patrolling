@@ -82,14 +82,19 @@ func CreateSession(s Sessions) *Sessions {
 	new_session := &Sessions{}
 	if o.QueryTable("sessions").Filter("devise_token_id", s.DeviseToken).Exist() == false {
 		key := []byte("traveling is fun")
+		user_id := o.Raw("SELECT id FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		db_password := o.Raw("SELECT password FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		decrypt_password := Decrypt(key, db_password)
-		fmt.Println("decrypt_password:", decrypt_password)
-		new_session.User.MobileNumber = s.User.MobileNumber
-		new_session.User.Password = decrypt_password
-		new_session.User = s.User
-		new_session.DeviseToken = s.DeviseToken
-		o.Insert(new_session)
+		// new_session.User.MobileNumber = s.User.MobileNumber
+		// new_session.User.Password = decrypt_password
+		if new_session.User.MobileNumber == s.User.MobileNumber && new_session.User.Password == decrypt_password {
+			// new_session.User = s.User
+			new_session.User = user_id
+			new_session.DeviseToken = s.DeviseToken
+			o.Insert(new_session)
+		} else {
+			fmt.Println("Invalid Mobile Number or Password")
+		}
 	} else {
 		fmt.Println("Session already Exists!")
 	}
