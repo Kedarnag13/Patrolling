@@ -21,7 +21,7 @@ func init() {
 		),
 		beego.NSNamespace("/sign_in",
 			beego.NSInclude(
-				&controllers.SignInController{},
+				&controllers.SessionController{},
 			),
 		),
 	)

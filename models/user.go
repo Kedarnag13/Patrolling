@@ -16,8 +16,8 @@ type Users struct {
 
 type Sessions struct {
 	Id          int
-	User        *Users   `orm:"rel(fk)"`
-	DeviseToken *Devises `orm:"rel(fk)"`
+	User        *Users   `json:"user_id" orm:"rel(fk)"`
+	DeviseToken *Devises `json:"devise_token" orm:"rel(fk)"`
 }
 
 type Devises struct {
@@ -52,17 +52,29 @@ type Devises struct {
 func CreateUser(u Users) *Users {
 	o := orm.NewOrm()
 	new_user := &Users{}
-	new_user.FirstName = u.FirstName
-	new_user.LastName = u.LastName
-	new_user.Email = u.Email
-	new_user.MobileNumber = u.MobileNumber
-	new_user.Designation = u.Designation
 	if o.QueryTable("users").Filter("MobileNumber", u.MobileNumber).Exist() == false {
+		new_user.FirstName = u.FirstName
+		new_user.LastName = u.LastName
+		new_user.Email = u.Email
+		new_user.MobileNumber = u.MobileNumber
+		new_user.Designation = u.Designation
 		o.Insert(new_user)
 	} else {
 		fmt.Println("User already exists with the Mobile number!")
 	}
 	return new_user
+}
+
+func CreateSession(s Sessions) *Sessions {
+	o := orm.NewOrm()
+	new_session := &Sessions{}
+	if o.QueryTable("sessions").Filter("User", s.User).Exist() == false {
+		new_session.User = s.User
+		new_session.DeviseToken = s.DeviseToken
+	} else {
+		fmt.Println("Session does not exist!")
+	}
+	return new_session
 }
 
 // func AddUser(u User) string {
