@@ -23,13 +23,13 @@ type Users struct {
 
 type Sessions struct {
 	Id          int
-	User        *Users   `json:"user_id" orm:"rel(fk)"`
+	User        *Users   `json:"user" orm:"rel(fk)"`
 	DeviseToken *Devises `json:"devise_token" orm:"rel(fk)"`
 }
 
 type Devises struct {
 	Id    int
-	Token string `orm:"pk"`
+	Token string `json:"token" orm:"pk"`
 }
 
 // var (
@@ -59,17 +59,17 @@ type Devises struct {
 func CreateUser(u Users) *Users {
 	o := orm.NewOrm()
 	new_user := &Users{}
+	new_user.FirstName = u.FirstName
+	new_user.LastName = u.LastName
+	new_user.Email = u.Email
+	new_user.MobileNumber = u.MobileNumber
+	new_user.Designation = u.Designation
+	key := []byte("traveling is fun")
+	Password := []byte(u.Password)
+	PasswordConfirmation := []byte(u.PasswordConfirmation)
+	new_user.Password = Encrypt(key, Password)
+	new_user.PasswordConfirmation = Encrypt(key, PasswordConfirmation)
 	if o.QueryTable("users").Filter("MobileNumber", u.MobileNumber).Exist() == false {
-		new_user.FirstName = u.FirstName
-		new_user.LastName = u.LastName
-		new_user.Email = u.Email
-		new_user.MobileNumber = u.MobileNumber
-		new_user.Designation = u.Designation
-		key := []byte("traveling is fun")
-		Password := []byte(u.Password)
-		PasswordConfirmation := []byte(u.PasswordConfirmation)
-		new_user.Password = Encrypt(key, Password)
-		new_user.PasswordConfirmation = Encrypt(key, PasswordConfirmation)
 		o.Insert(new_user)
 	} else {
 		fmt.Println("User already exists with the Mobile number!")
@@ -80,11 +80,18 @@ func CreateUser(u Users) *Users {
 func CreateSession(s Sessions) *Sessions {
 	o := orm.NewOrm()
 	new_session := &Sessions{}
-	if o.QueryTable("sessions").Filter("User", s.User).Exist() == false {
+	if o.QueryTable("sessions").Filter("devise_token_id", s.DeviseToken).Exist() == false {
+		key := []byte("traveling is fun")
+		db_password := o.Raw("SELECT password FROM users WHERE mobile_number = ?", s.User.MobileNumber)
+		decrypt_password := Decrypt(key, db_password)
+		fmt.Println("decrypt_password:", decrypt_password)
+		new_session.User.MobileNumber = s.User.MobileNumber
+		new_session.User.Password = decrypt_password
 		new_session.User = s.User
 		new_session.DeviseToken = s.DeviseToken
+		o.Insert(new_session)
 	} else {
-		fmt.Println("Session does not exist!")
+		fmt.Println("Session already Exists!")
 	}
 	return new_session
 }
