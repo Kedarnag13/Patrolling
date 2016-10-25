@@ -6,7 +6,6 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// Operations about Users
 type RegisterController struct {
 	beego.Controller
 }
