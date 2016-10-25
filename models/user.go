@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -11,12 +12,17 @@ type Users struct {
 	Email        string `json:"email" valid:"Required;Email" orm:"unique"`
 	MobileNumber string `json:"mobile_number" valid:"Required" orm:"unique"`
 	Designation  string `json:"designation" valid:"Alpha"`
-	Devise_Token string `json:"devise_token" valid:"Required"`
 }
 
 type Sessions struct {
-	Id     int
-	UserId int
+	Id          int
+	User        *Users   `orm:"rel(fk)"`
+	DeviseToken *Devises `orm:"rel(fk)"`
+}
+
+type Devises struct {
+	Id    int
+	Token string `orm:"pk"`
 }
 
 // var (

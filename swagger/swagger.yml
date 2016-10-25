@@ -22,7 +22,3 @@ definitions:
       Score:
         type: integer
         format: int64
-tags:
-- name: register
-  description: |
-    Operations about Users

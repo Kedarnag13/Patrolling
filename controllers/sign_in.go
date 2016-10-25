@@ -6,12 +6,12 @@ import (
 	"github.com/astaxie/beego"
 )
 
-type SessionController struct {
+type SignInController struct {
 	beego.Controller
 }
 
-func (s *SessionController) Post() {
+func (s *SignInController) Post() {
 	var user models.Sessions
-	json.Unmarshal(r.Ctx.Input.RequestBody, &user)
+	json.Unmarshal(s.Ctx.Input.RequestBody, &user)
 
 }

@@ -31,11 +31,5 @@
                 }
             }
         }
-    },
-    "tags": [
-        {
-            "name": "register",
-            "description": "Operations about Users\n"
-        }
-    ]
+    }
 }

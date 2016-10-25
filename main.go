@@ -12,7 +12,7 @@ import (
 func init() {
 	orm.RegisterDriver("postgres", orm.DRPostgres)
 	orm.RegisterDataBase("default", "postgres", "user=postgres password=postgres dbname=patrolling_development sslmode=disable")
-	orm.RegisterModel(new(models.Users))
+	orm.RegisterModel(new(models.Users), new(models.Sessions), new(models.Devises))
 }
 
 func main() {
