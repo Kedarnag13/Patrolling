@@ -19,7 +19,7 @@ func main() {
 	name := "default"
 
 	// Drop table and re-create.
-	force := true
+	force := false
 
 	// Print log.
 	verbose := true

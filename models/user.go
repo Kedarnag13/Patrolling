@@ -58,6 +58,7 @@ type Devises struct {
 
 func CreateUser(u Users) *Users {
 	o := orm.NewOrm()
+	o.Using("default")
 	new_user := &Users{}
 	new_user.FirstName = u.FirstName
 	new_user.LastName = u.LastName
@@ -79,22 +80,27 @@ func CreateUser(u Users) *Users {
 
 func CreateSession(s Sessions) *Sessions {
 	o := orm.NewOrm()
+	o.Using("default")
 	new_session := &Sessions{}
 	if o.QueryTable("sessions").Filter("devise_token_id", s.DeviseToken).Exist() == false {
 		key := []byte("traveling is fun")
+
 		user_id := o.Raw("SELECT id FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		db_password := o.Raw("SELECT password FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		decrypt_password := Decrypt(key, db_password)
 		new_session.User.MobileNumber = s.User.MobileNumber
 		new_session.User.Password = decrypt_password
 		if new_session.User.MobileNumber == s.User.MobileNumber && new_session.User.Password == decrypt_password {
-			// new_session.User = s.User
+			new_session.User = s.User
 			new_session.User = user_id
 			new_session.DeviseToken = s.DeviseToken
 			o.Insert(new_session)
 		} else {
 			fmt.Println("Invalid Mobile Number or Password")
 		}
+		// var users []*Users
+		// o.QueryTable("users")
+		// fmt.Println(o.Read(&users))
 	} else {
 		fmt.Println("Session already Exists!")
 	}
