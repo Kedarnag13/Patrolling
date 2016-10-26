@@ -85,8 +85,8 @@ func CreateSession(s Sessions) *Sessions {
 		user_id := o.Raw("SELECT id FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		db_password := o.Raw("SELECT password FROM users WHERE mobile_number = ?", s.User.MobileNumber)
 		decrypt_password := Decrypt(key, db_password)
-		// new_session.User.MobileNumber = s.User.MobileNumber
-		// new_session.User.Password = decrypt_password
+		new_session.User.MobileNumber = s.User.MobileNumber
+		new_session.User.Password = decrypt_password
 		if new_session.User.MobileNumber == s.User.MobileNumber && new_session.User.Password == decrypt_password {
 			// new_session.User = s.User
 			new_session.User = user_id
